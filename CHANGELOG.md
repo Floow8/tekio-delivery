@@ -4,6 +4,10 @@ What changed in each release, in short.
 
 ## [Unreleased]
 
+## [0.13.1] - 2026-10-11
+
+- **Runs on ARM too** — the images are published for Intel and AMD and for ARM (Apple Silicon Macs, ARM servers). 0.13.0's could not be installed on a Mac with Apple Silicon.
+
 ## [0.13.0] - 2026-10-11
 
 - **Nobody signs in at first** — the installer asks nothing and prints a setup link; whoever opens it administers the installation. Settings › Sign-in sets up Microsoft Entra ID, Google, any OpenID Connect provider or a password, each tried before sign-in can be required. An installation made by 0.12.0's installer keeps its administrator's password, still required.

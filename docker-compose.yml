@@ -35,7 +35,7 @@ name: tekio-delivery
 
 services:
   backend:
-    image: ${TEKIO_BACKEND_IMAGE:-ghcr.io/floow8/tekio-backend:0.13.0}
+    image: ${TEKIO_BACKEND_IMAGE:-ghcr.io/floow8/tekio-backend:0.13.1}
     restart: unless-stopped
     environment:
       TEKIO_SECRET_KEY: ${TEKIO_SECRET_KEY:?set TEKIO_SECRET_KEY in .env}
@@ -72,7 +72,7 @@ services:
       start_period: 30s
 
   frontend:
-    image: ${TEKIO_FRONTEND_IMAGE:-ghcr.io/floow8/tekio-frontend:0.13.0}
+    image: ${TEKIO_FRONTEND_IMAGE:-ghcr.io/floow8/tekio-frontend:0.13.1}
     restart: unless-stopped
     ports:
       - "${TEKIO_BIND:-127.0.0.1}:${TEKIO_PORT:-3000}:3000"
