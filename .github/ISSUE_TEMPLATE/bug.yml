@@ -1,0 +1,56 @@
+name: Something is wrong
+description: A page, a figure or an install step that does not do what it should.
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you. The free version comes without support: issues are read, not answered to a deadline.
+        **A security problem?** Report it privately instead — Security → Report a vulnerability.
+        Never paste a token, a password or your company's data here.
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened, and what you expected
+      placeholder: On the Flow page, the cycle time reads 0 days for a team that finished twelve stories last sprint.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: How to see it
+      placeholder: |
+        1. Settings › Source, files uploaded from a Jira export
+        2. Add projects, one Scrum team
+        3. Flow
+  - type: input
+    id: version
+    attributes:
+      label: Version
+      description: Settings › System, or `docker compose images` in the installation's folder.
+      placeholder: "0.13.0"
+    validations:
+      required: true
+  - type: dropdown
+    id: source
+    attributes:
+      label: Where the work comes from
+      options:
+        - Jira Cloud
+        - Files (CSV or Excel)
+        - The demo data
+  - type: dropdown
+    id: way
+    attributes:
+      label: How the team works
+      options:
+        - Scrum
+        - Kanban
+        - SAFe (ART)
+        - Several
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs, if any
+      description: "`docker compose logs --tail 100 backend` — check there is nothing private in it first."
+      render: text

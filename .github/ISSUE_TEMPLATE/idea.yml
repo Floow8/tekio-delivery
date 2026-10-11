@@ -1,0 +1,28 @@
+name: An idea
+description: Something you would like Tekio Delivery to answer or do.
+labels: [idea]
+body:
+  - type: markdown
+    attributes:
+      value: The most useful ideas start from a question somebody keeps asking you, and how you answer it today.
+  - type: textarea
+    id: question
+    attributes:
+      label: The question you need answered
+      placeholder: Before each steering committee, which epics will miss the PI, and why.
+    validations:
+      required: true
+  - type: textarea
+    id: today
+    attributes:
+      label: How you answer it today
+      placeholder: A spreadsheet rebuilt from three Jira filters every second Tuesday.
+  - type: dropdown
+    id: who
+    attributes:
+      label: Who asks it
+      options:
+        - A team
+        - An ART or a group of teams
+        - A solution or a value stream
+        - The portfolio

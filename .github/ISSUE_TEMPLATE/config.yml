@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: See it first — the live demo
+    url: https://delivery.tekio.app/demo
+    about: Every page on a fictional company, nothing to install.
+  - name: Licences, trial and prices
+    url: https://delivery.tekio.app/en/licence
+    about: A 30-day trial key, or a licence for an ART, a group or the portfolio.

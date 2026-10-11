@@ -1,0 +1,19 @@
+Tekio Delivery — licence notice
+
+Tekio Delivery is proprietary software, the property of Tekio, EURL, RCS Toulouse
+891 592 685. It is distributed as compiled Docker images; its source code is not
+published.
+
+Using Tekio Delivery — the free version, a trial or a paid licence — is governed
+by the licence conditions at:
+
+    https://delivery.tekio.app/en/terms   (English)
+    https://delivery.tekio.app/fr/terms   (français)
+
+In short, and the conditions prevail: the free version covers one Scrum or Kanban
+team, with no time limit, as it is and without support; anything more needs a
+licence key.
+
+The files in this repository — the installer, the compose file and the
+documentation — may be copied, changed and shared freely in order to install and
+run Tekio Delivery under those conditions.

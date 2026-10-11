@@ -1,0 +1,102 @@
+# Tekio Delivery on your own machine or server.
+#
+# The quickest way: in an empty folder, run the installer, which writes .env
+# for you, starts both images and prints the link to open —
+#
+#     curl -fsSLO https://delivery.tekio.app/install.sh && bash install.sh
+#
+# Nobody signs in at first: whoever opens that link administers the
+# installation. Before you share it, set up a way in — Microsoft, Google, any
+# OpenID Connect provider or a password — in Settings › Sign-in, try it, and
+# require it.
+#
+# Or by hand: put this file in an empty folder with a .env beside it, run
+# `docker compose up -d`, and open http://localhost:3000/setup?code=<TEKIO_SETUP_CODE>.
+#
+#     TEKIO_SECRET_KEY=…         encrypts what Tekio keeps secret  (openssl rand -hex 32)
+#     BACKEND_AUTH_SECRET=…      signs each request to the backend (openssl rand -hex 32)
+#     AUTH_SECRET=…              signs sign-in sessions            (openssl rand -hex 32)
+#     TEKIO_SETUP_CODE=…         the setup link's code             (openssl rand -hex 16)
+#
+# Keep .env private: it holds the keys to everything Tekio stores. Optional:
+#
+#     TEKIO_LICENCE=…            a licence key (or paste it in Settings › Licence)
+#     TEKIO_BIND=0.0.0.0         listen beyond this machine — put HTTPS in front
+#     TEKIO_PORT=3000            the port to open
+#     TEKIO_BACKEND_IMAGE / TEKIO_FRONTEND_IMAGE   your registry's copies, where
+#                                ghcr.io cannot be reached
+#
+# Updating: run the installer again in this folder (it keeps .env), or
+# download this file again and `docker compose up -d`. The data is in the
+# `tekio-data` volume, and the database is copied before every upgrade changes
+# it (backups/ in that volume).
+
+name: tekio-delivery
+
+services:
+  backend:
+    image: ${TEKIO_BACKEND_IMAGE:-ghcr.io/floow8/tekio-backend:0.13.0}
+    restart: unless-stopped
+    environment:
+      TEKIO_SECRET_KEY: ${TEKIO_SECRET_KEY:?set TEKIO_SECRET_KEY in .env}
+      BACKEND_AUTH_SECRET: ${BACKEND_AUTH_SECRET:?set BACKEND_AUTH_SECRET in .env}
+      # Refuse to start rather than serve an API that checks no token.
+      TEKIO_REQUIRE_AUTH: "true"
+      # Who signs in is decided in Settings › Sign-in.
+      TEKIO_SIGN_IN: settings
+      TEKIO_INTERFACE: new
+      # The bundled profile with nothing of the demo's in it: no names, no
+      # field ids, no projects. Your own words are set in Settings.
+      TEKIO_TENANT: self-hosted
+      TEKIO_SKIP_CONFIG_BOOTSTRAP: "true"
+      REDIS_URL: ""
+      # Where "Explore with demo data" keeps Northwind Maritime: beside your
+      # own data, never in it, and deleted when you remove it.
+      TEKIO_DEMO_STORE: /app/data/demo
+      # A licence key, if you would rather keep it here than paste it in
+      # Settings › Licence. Empty is the free version: one Scrum or Kanban team.
+      TEKIO_LICENCE: ${TEKIO_LICENCE:-}
+      # Written by 0.12.0's installer, and only there: its administrator keeps
+      # signing in with that password (Settings › Sign-in shows it), and stays
+      # an administrator. Empty on an installation made since.
+      ADMIN_EMAILS: ${TEKIO_ADMIN_EMAIL:-}
+      TEKIO_ADMIN_EMAIL: ${TEKIO_ADMIN_EMAIL:-}
+      TEKIO_ADMIN_PASSWORD_HASH: ${TEKIO_ADMIN_PASSWORD_HASH:-}
+    volumes:
+      - tekio-data:/app/data
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 18
+      start_period: 30s
+
+  frontend:
+    image: ${TEKIO_FRONTEND_IMAGE:-ghcr.io/floow8/tekio-frontend:0.13.0}
+    restart: unless-stopped
+    ports:
+      - "${TEKIO_BIND:-127.0.0.1}:${TEKIO_PORT:-3000}:3000"
+    environment:
+      # The browser calls /backend on this address; the frontend passes it on.
+      TEKIO_BACKEND_INTERNAL_URL: http://backend:8000
+      # The same value as the backend's: the frontend signs what it verifies.
+      BACKEND_AUTH_SECRET: ${BACKEND_AUTH_SECRET:?set BACKEND_AUTH_SECRET in .env}
+      AUTH_SECRET: ${AUTH_SECRET:?set AUTH_SECRET in .env}
+      TEKIO_SIGN_IN: settings
+      # Until sign-in is required, the installation opens only with the link
+      # carrying this code: /setup?code=<it>. The installer prints it.
+      TEKIO_SETUP_CODE: ${TEKIO_SETUP_CODE:-}
+    depends_on:
+      backend:
+        condition: service_healthy
+    healthcheck:
+      # wget, not curl: the Node image has no curl. 127.0.0.1, not localhost:
+      # localhost resolves to ::1 first in this image, and Next listens on IPv4.
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://127.0.0.1:3000/api/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 18
+      start_period: 20s
+
+volumes:
+  tekio-data:
