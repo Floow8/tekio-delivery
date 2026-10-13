@@ -26,6 +26,10 @@
 #     TEKIO_BACKEND_IMAGE / TEKIO_FRONTEND_IMAGE   your registry's copies, where
 #                                ghcr.io cannot be reached
 #
+# A Jira whose certificate your organisation's own authority signed: put that
+# authority's certificate (PEM: .pem, .crt or .cer) in a `certs` folder beside
+# this file and restart. It is trusted beside the public authorities.
+#
 # Updating: run the installer again in this folder (it keeps .env), or
 # download this file again and `docker compose up -d`. The data is in the
 # `tekio-data` volume, and the database is copied before every upgrade changes
@@ -35,7 +39,7 @@ name: tekio-delivery
 
 services:
   backend:
-    image: ${TEKIO_BACKEND_IMAGE:-ghcr.io/floow8/tekio-backend:0.13.1}
+    image: ${TEKIO_BACKEND_IMAGE:-ghcr.io/floow8/tekio-backend:0.14.0}
     restart: unless-stopped
     environment:
       TEKIO_SECRET_KEY: ${TEKIO_SECRET_KEY:?set TEKIO_SECRET_KEY in .env}
@@ -62,8 +66,11 @@ services:
       ADMIN_EMAILS: ${TEKIO_ADMIN_EMAIL:-}
       TEKIO_ADMIN_EMAIL: ${TEKIO_ADMIN_EMAIL:-}
       TEKIO_ADMIN_PASSWORD_HASH: ${TEKIO_ADMIN_PASSWORD_HASH:-}
+      # Your organisation's certificate authorities (app/trusted_certs.py).
+      TEKIO_CA_DIR: /app/certs
     volumes:
       - tekio-data:/app/data
+      - ./certs:/app/certs:ro
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
       interval: 10s
@@ -72,7 +79,7 @@ services:
       start_period: 30s
 
   frontend:
-    image: ${TEKIO_FRONTEND_IMAGE:-ghcr.io/floow8/tekio-frontend:0.13.1}
+    image: ${TEKIO_FRONTEND_IMAGE:-ghcr.io/floow8/tekio-frontend:0.14.0}
     restart: unless-stopped
     ports:
       - "${TEKIO_BIND:-127.0.0.1}:${TEKIO_PORT:-3000}:3000"

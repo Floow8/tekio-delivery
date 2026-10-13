@@ -82,6 +82,10 @@ else
   say "Wrote .env (readable by you alone)."
 fi
 
+# Your organisation's certificate authorities go here (a Jira its own
+# authority signed); made by you, so it is yours to add files to.
+mkdir -p certs
+
 say "Starting Tekio Delivery (the first time downloads about 180 MB)…"
 docker compose pull --quiet >/dev/null 2>&1 || true
 docker compose up -d --wait >/dev/null || fail "It did not start. What it says: docker compose logs --tail 50"

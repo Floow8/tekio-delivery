@@ -4,6 +4,12 @@ What changed in each release, in short.
 
 ## [Unreleased]
 
+## [0.14.0] - 2026-10-13
+
+- **Jira Data Center** — a Data Center site (9.12 LTS or later; 10.3 LTS included) connects like a Cloud one: give its address and a personal access token, or a username and its password. Every page reads it as it reads Cloud, Advanced Roadmaps teams by their names and stories under their epics by Epic Link. Not on Data Center: Jira Product Discovery, which Atlassian offers on Cloud only.
+- **Check what Tekio reads** — Settings › Source asks the connected Jira each question the pages ask (searching, counting, an item's history, a field's options, sprints, people, team names) and says, line by line, what came back. Nothing is written.
+- **Your organisation's certificates** — a Jira served with a certificate your company's own authority signed: put that authority's certificate in the `certs` folder beside `docker-compose.yml` and restart. It is trusted beside the public ones.
+
 ## [0.13.1] - 2026-10-11
 
 - **Runs on ARM too** — the images are published for Intel and AMD and for ARM (Apple Silicon Macs, ARM servers). 0.13.0's could not be installed on a Mac with Apple Silicon.

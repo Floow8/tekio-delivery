@@ -24,9 +24,9 @@ Docker images on GitHub's registry; its source code is not published.
 - **Docker with Compose** — Docker Desktop on Windows or macOS, Docker Engine on Linux.
 - **2 GB of RAM** and about **5 GB of disk** for the cache.
 - **bash and curl** — macOS and Linux have both; on Windows, use WSL.
-- **Your own data**, when you are ready: a Jira Cloud account that can read the
-  projects you want to measure (no Jira admin rights needed), or your tracker's
-  exported files.
+- **Your own data**, when you are ready: a Jira Cloud or Jira Data Center (9.12
+  or later) account that can read the projects you want to measure (no Jira
+  admin rights needed), or your tracker's exported files.
 
 ## Install
 
@@ -63,6 +63,18 @@ The first screen offers two ways to start.
   (`https://yourcompany.atlassian.net`), the account the token belongs to, and the
   token. It is encrypted with your own secret, kept in the installation's volume,
   and never leaves the machine. Read access is enough.
+- **Jira Data Center** (9.12 LTS or later) — create a personal access token in
+  your Jira profile (*Profile → Personal Access Tokens*), then in **Settings ›
+  Source** enter your site's address (with its context path, such as
+  `https://jira.yourcompany.com/jira`), leave the username empty, and paste the
+  token — or give a username and its password. The machine running Tekio must
+  reach the site. Jira Product Discovery is Cloud only, so its pages stay empty.
+- **A certificate your organisation signed** — if your Jira's address is
+  served with a certificate from your company's own authority (the connection
+  says *certificate verify failed*), put that authority's certificate, PEM
+  encoded (`.pem`, `.crt` or `.cer`), in the `certs` folder beside
+  `docker-compose.yml` and run `docker compose restart backend`. It is trusted
+  beside the public authorities.
 - **Files** — upload CSV or Excel files in **Settings › Source**: your tracker's
   export as it is (Jira, Azure DevOps, Linear, Trello, Asana and more), or the
   three templates filled in. Download the templates there; the filled example
@@ -157,7 +169,8 @@ licences are on <https://delivery.tekio.app/en/licence>; prices are on the site.
 | Blank page on :3000 | Still starting: `docker compose logs -f`. |
 | "Open it with its setup link" | Nobody signs in yet: open the link `bash install.sh` prints. |
 | "Cannot store token" | `TEKIO_SECRET_KEY` is missing from `.env`. |
-| 401 from Jira | The email and the token must belong to the same account. |
+| "certificate verify failed" | Your Jira's certificate is signed by your organisation: put its authority's certificate in `certs/` and restart the backend. |
+| 401 from Jira | Cloud: the email and the token must belong to the same account. Data Center: leave the username empty with a personal access token. |
 | No fields found while adding a project | The account cannot see the project: check its permissions. |
 | Charts are empty | The first read is still running — it reads each item's history. |
 | "This needs a licence key" | More than one team, or the portfolio: see licences above. |
