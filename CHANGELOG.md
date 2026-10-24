@@ -4,6 +4,10 @@ What changed in each release, in short.
 
 ## [Unreleased]
 
+## [0.14.1] - 2026-10-24
+
+- **Security** — Next.js 16.4.2 (the advisories of 14 October 2026: remote code execution in image optimisation and in `use cache`, a Server Actions denial of service), Node 22.23.4 in the frontend images (CVE-2026-111497, the bundled Brotli decoder) and follow-redirects 1.16.1 (credentials kept across a cross-origin redirect). The production dependencies audit clean.
+
 ## [0.14.0] - 2026-10-13
 
 - **Jira Data Center** — a Data Center site (9.12 LTS or later; 10.3 LTS included) connects like a Cloud one: give its address and a personal access token, or a username and its password. Every page reads it as it reads Cloud, Advanced Roadmaps teams by their names and stories under their epics by Epic Link. Not on Data Center: Jira Product Discovery, which Atlassian offers on Cloud only.
