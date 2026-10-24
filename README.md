@@ -77,8 +77,10 @@ The first screen offers two ways to start.
   beside the public authorities.
 - **Files** — upload CSV or Excel files in **Settings › Source**: your tracker's
   export as it is (Jira, Azure DevOps, Linear, Trello, Asana and more), or the
-  three templates filled in. Download the templates there; the filled example
-  shows every column.
+  three templates filled in. Download them from Settings › Source, or before
+  installing: [`tekio-delivery-templates.zip`](../../releases/latest/download/tekio-delivery-templates.zip)
+  — also in the [`templates/`](templates) folder here. Open the filled example
+  first: it shows every column.
 
 Then **Settings › Add projects**: tick a project and Tekio reads its issues,
 boards, sprints and fields, and proposes the whole setup — its levels, the field

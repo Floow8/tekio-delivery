@@ -4,6 +4,28 @@ What changed in each release, in short.
 
 ## [Unreleased]
 
+## [0.15.1] - 2026-10-24
+
+- **Security** — Next.js 16.4.2 (the advisories of 14 October 2026: remote code execution in image optimisation and in `use cache`, a Server Actions denial of service), Node 22.23.4 in the frontend images (CVE-2026-111497, the bundled Brotli decoder) and follow-redirects 1.16.1 (credentials kept across a cross-origin redirect). The production dependencies audit clean.
+- **A rank and a score, side by side** — the ranked list no longer makes you choose between a rank and WSJF, RICE or value over effort. Map a score's fields in Settings › Plan and it sits beside the rank, typed in place; map several and pick one on the page. Ranked by hand, a drag writes the rank and "Rank by WSJF" puts the whole list in the score's order once; where a score ranks the list, its order is written to the rank field when there is one. MoSCoW is a choice, not a box to type in. On files the product holds, scores and the rank are written to the files' own columns. New interface only.
+
+- **Dependencies followed up** — a dependency accepted but planned too late is told to both teams; a declined one is asked again for a later sprint or taken to the RTE; asking a team carries a word for them, and its items are picked by key or by words. An item's side panel shows the answers to its dependencies.
+- **Commit in three tabs** — Confidence vote, the ART's risks, and Lock & publish with its checklist.
+- **A solution's PI** — a solution ranks its capabilities on its own list, and publishes its own closeout, with the STE's word.
+- **Teams** — notifications reach the teams you are in; Your account suggests the teams your work is filed under; who answers a team's dependencies can be its named roles. The ranked list shows each item's envelope where Budget is on. A read-only demo says it is read-only.
+
+## [0.15.0] - 2026-10-15 (never published: its changes ship in 0.15.1)
+
+- **The PI, in five phases** — one PI entry takes a PI from Prepare to Plan, Commit, Run and Close. Work dragged on the PI board is written to Jira at once, as the person who moved it — each person's Jira account is found by their sign-in's email, no app to install — and every move is logged and can be undone. The plan is published as the record and compared with what happened since; teams ask each other for dependencies and accept or decline them; the confidence vote runs live from everyone's phone; the ranked list is scored the project's own way. Board is now called Kanban. New interface only.
+- **No licence, 14 days** — an installation that never held a licence and runs more than the free tier covers (more than one project, an ART, a group of teams, an organisation unit) now has 14 days from the day it is first seen there, as a paid licence has after it ends. The banner and Settings › Licence say the day it closes; after it, a key or the free version opens it again. Nothing is deleted.
+- **The PI, screen by screen** — every PI page redrawn as planned: the PI board teams by sprints with a ranked tray, the room with each team's people, load and asks, dependencies grouped with a who-needs-whom grid, the vote board, risks as a ROAM board, the running PI against its plan, and a closeout that is the PI's record. Next PI and Capacity are one page, Capacity & readiness; a team reads the PI in its own words; a solution has each ART's commitment and its own closeout.
+- **CSV templates with every release** — the template pack (a filled example and empty files with the same columns) is attached to each release and in the public repository's `templates/` folder; the install guide links to it.
+- **A risk can threaten several objectives** — on a team's plan, the register and the ART Sync, link a risk to as many of its team's objectives as it puts in danger; it shows under each and still counts once. A locked sync keeps every link it had.
+- **The PI planning matrix follows your rule** — a team's cell on the epic-by-team matrix reads committed only where the project's commitment rule says so (otherwise partial, with how many are committed, planned, or not planned), marks where a team's own objective for the epic disagrees with its work, and refreshes as soon as a plan is saved or locked.
+- **The PI board fits the window** — the board scrolls on its own with its sprints and rows' names pinned, so its sideways scrollbar is always at the foot of the screen; Display › Wide uses the whole window, and a button beside it shows the board full screen.
+- **Rankings keep their decimals** — a Business Ranking of 1.1, 1.2 or 1.6 reads as written on every page and sorts in that order; 2 still reads 2. Dragging an item into a new place writes only that item, a number between its new neighbours (1.4 between 1.2 and 1.6), so the rest of the list keeps its numbers.
+- **Settings › Access and Sign-in open on the demo** — on an installation where nobody is asked to sign in (the public demo, a compose stack), who may sign in is now shown instead of an error.
+
 ## [0.14.1] - 2026-10-24
 
 - **Security** — Next.js 16.4.2 (the advisories of 14 October 2026: remote code execution in image optimisation and in `use cache`, a Server Actions denial of service), Node 22.23.4 in the frontend images (CVE-2026-111497, the bundled Brotli decoder) and follow-redirects 1.16.1 (credentials kept across a cross-origin redirect). The production dependencies audit clean.
